@@ -1,6 +1,6 @@
 # wsz
 
-Rust crate to unpack, pack, and screenshot Winamp skins. Borrows heavily from [https://github.com/captbaritone/webamp/tree/master](webamp).
+Rust crate to unpack, pack, and screenshot Winamp skins. Borrows heavily from [webamp](https://github.com/captbaritone/webamp/tree/master).
 
 [docs.rs](https://docs.rs/wsz/latest/wsz)
 
