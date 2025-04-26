@@ -1,0 +1,11 @@
+[package]
+name = "wsz"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.81"
+license = "MIT"
+
+[dependencies]
+zip = "2.5.0"
+thiserror = "2.0.12"
+image =  { version = "0.25.0", default-features = false, features = ["bmp", "png"] }
