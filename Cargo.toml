@@ -1,7 +1,8 @@
 [package]
 name = "wsz"
 description = "Rust crate for the winamp skin format (wsz)"
-version = "0.1.0"
+repository = "https://github.com/brian-armstrong/wsz"
+version = "0.1.1"
 edition = "2021"
 rust-version = "1.81"
 license = "MIT"
