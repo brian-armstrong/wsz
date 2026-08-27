@@ -27,7 +27,7 @@ pub fn playpaus_sprites() -> Vec<SpriteDefinition> {
             height: 9,
         },
         SpriteDefinition {
-            name: "MAIN_NOT_WORKING_INDICATOR".to_string(),
+            name: "MAIN_WORKING_INDICATOR".to_string(),
             sprite_sheet: "PLAYPAUS.BMP".to_string(),
             x: 36,
             y: 0,
@@ -35,7 +35,7 @@ pub fn playpaus_sprites() -> Vec<SpriteDefinition> {
             height: 9,
         },
         SpriteDefinition {
-            name: "MAIN_WORKING_INDICATOR".to_string(),
+            name: "MAIN_NOT_WORKING_INDICATOR".to_string(),
             sprite_sheet: "PLAYPAUS.BMP".to_string(),
             x: 39,
             y: 0,
