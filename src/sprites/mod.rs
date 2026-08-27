@@ -259,7 +259,7 @@ impl SpriteManager {
     /// # Returns
     ///
     /// A Result containing the extracted sprite as a new image.
-    /// 
+    ///
     /// If the sprite is partially off the sheet, it will be drawn with whatever part overlaps the sheet.
     pub fn extract_sprite(&self, name: &str, sprite_sheet: &DynamicImage) -> Result<SpriteImage> {
         let def = self
@@ -270,8 +270,16 @@ impl SpriteManager {
             return Ok(ImageBuffer::new(0, 0));
         }
 
-        let width = if def.x + def.width > sprite_sheet.width() { sprite_sheet.width() - def.x } else { def.width };
-        let height = if def.y + def.height > sprite_sheet.height() { sprite_sheet.height() - def.y } else { def.height };
+        let width = if def.x + def.width > sprite_sheet.width() {
+            sprite_sheet.width() - def.x
+        } else {
+            def.width
+        };
+        let height = if def.y + def.height > sprite_sheet.height() {
+            sprite_sheet.height() - def.y
+        } else {
+            def.height
+        };
 
         let mut sprite_img = ImageBuffer::new(width, height);
 
@@ -514,7 +522,7 @@ impl SpriteWindowManager {
     /// A reference to the window definition
     pub fn get_window_definition(&self, name: &str) -> Option<&SpriteWindowDefinition> {
         self.definitions.get(name)
-     }
+    }
 
     /// Returns all window definitions by window type
     ///
@@ -526,7 +534,8 @@ impl SpriteWindowManager {
     ///
     /// A Vec of references to the window definitions
     pub fn get_definitions_by_window_type(&self, window_type: WindowType) -> Vec<&SpriteWindowDefinition> {
-        self.definitions.values()
+        self.definitions
+            .values()
             .filter(|d| d.window_type == window_type)
             .collect()
     }
