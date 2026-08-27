@@ -67,7 +67,7 @@ fn extract_sprites(args: &Vec<String>) {
             for sheet in sprite_sheets {
                 // Extract sprites from this BMP
                 match sprite_manager.extract_sprite_sheet_from_archive(&contents, &sheet) {
-                    Ok(sprites) => {
+                    Ok((_sprite_sheet_img, sprites)) => {
                         if !sprites.is_empty() {
                             // Get BMP name without path and extension for directory name and sprite lookup
                             let bmp_base = Path::new(&sheet)

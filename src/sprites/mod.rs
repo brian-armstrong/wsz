@@ -65,6 +65,7 @@ pub struct SpriteDefinition {
     pub height: u32,
 }
 
+pub type SpriteSheet = ImageBuffer<Rgba<u8>, Vec<u8>>;
 pub type SpriteImage = ImageBuffer<Rgba<u8>, Vec<u8>>;
 
 /// Extracts sprites from sprite sheets in the WSZ archive
@@ -116,14 +117,19 @@ impl SpriteManager {
     /// # Returns
     ///
     /// A Result containing a HashMap sprite names to sprite images
-    pub fn extract_all_sprites_from_archive(&self, archive: &WszArchive) -> Result<HashMap<String, SpriteImage>> {
+    pub fn extract_all_sprites_from_archive(
+        &self,
+        archive: &WszArchive,
+    ) -> Result<(HashMap<String, SpriteSheet>, HashMap<String, SpriteImage>)> {
+        let mut sprite_sheets = HashMap::new();
         let mut sprite_images = HashMap::new();
         for bmp_name in SPRITE_SHEETS {
-            if let Ok(sprite_sheet) = self.extract_sprite_sheet_from_archive(archive, bmp_name) {
-                sprite_images.extend(sprite_sheet);
+            if let Ok((sprite_sheet, sprite_sheet_images)) = self.extract_sprite_sheet_from_archive(archive, bmp_name) {
+                sprite_sheets.insert(bmp_name.to_string(), sprite_sheet);
+                sprite_images.extend(sprite_sheet_images);
             }
         }
-        Ok(sprite_images)
+        Ok((sprite_sheets, sprite_images))
     }
 
     /// Extracts all sprites from a specific BMP file in the archive, supporting nested directories
@@ -140,7 +146,7 @@ impl SpriteManager {
         &self,
         archive: &WszArchive,
         sprite_sheet_name: &str,
-    ) -> Result<HashMap<String, SpriteImage>> {
+    ) -> Result<(SpriteSheet, HashMap<String, SpriteImage>)> {
         if !SPRITE_SHEETS.contains(&sprite_sheet_name) {
             return Err(WszError::ArgumentError(format!(
                 "{} not a known sprite sheet",
@@ -193,7 +199,7 @@ impl SpriteManager {
             }
         }
 
-        Ok(sprite_images)
+        Ok((img.into(), sprite_images))
     }
 
     /// Creates a new image large enough to fit all sprites from a specific file

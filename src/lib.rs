@@ -17,6 +17,7 @@ use error::{Result, WszError};
 /// This is the easiest way to access everything from the archive
 #[derive(Debug, Clone)]
 pub struct Wsz {
+    sprite_sheets: std::collections::HashMap<String, sprites::SpriteSheet>,
     sprites: std::collections::HashMap<String, sprites::SpriteImage>,
     vis_colors: text::viscolor::VisColors,
     pledit: text::pledit::PleditSettings,
@@ -63,7 +64,7 @@ impl Wsz {
     /// A new Wsz instance
     pub fn from_archive(archive: &archive::WszArchive) -> Result<Self> {
         let sprite_manager = sprites::SpriteManager::new();
-        let sprites = sprite_manager.extract_all_sprites_from_archive(archive)?;
+        let (sprite_sheets, sprites) = sprite_manager.extract_all_sprites_from_archive(archive)?;
 
         // allow these to be not found
         let vis_colors = match text::viscolor::VisColors::from_archive(archive) {
@@ -89,6 +90,7 @@ impl Wsz {
         };
 
         Ok(Self {
+            sprite_sheets,
             sprites,
             vis_colors,
             pledit,
@@ -116,6 +118,28 @@ impl Wsz {
     /// A map of sprite names to sprite images
     pub fn get_sprites(&self) -> &std::collections::HashMap<String, sprites::SpriteImage> {
         &self.sprites
+    }
+
+    /// Get a sprite sheet from the archive
+    ///
+    /// # Arguments
+    ///
+    /// * `name` - The name of the sprite sheet to get
+    ///
+    /// # Returns
+    ///
+    /// The sprite sheet if it exists, otherwise None
+    pub fn get_sprite_sheet(&self, name: &str) -> Option<&sprites::SpriteSheet> {
+        self.sprite_sheets.get(name)
+    }
+
+    /// Get all sprite sheets from the archive
+    ///
+    /// # Returns
+    ///
+    /// A map of sprite sheet names to sprite sheets
+    pub fn get_sprite_sheets(&self) -> &std::collections::HashMap<String, sprites::SpriteSheet> {
+        &self.sprite_sheets
     }
 
     /// Get the visualization colors (viscolor.txt)
