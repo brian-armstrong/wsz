@@ -502,4 +502,32 @@ impl SpriteWindowManager {
     pub fn remove_window_sprite(&mut self, name: &str) {
         self.definitions.remove(name);
     }
+
+    /// Returns a window definition by name
+    ///
+    /// # Arguments
+    ///
+    /// * `name` - Name of the window definition
+    ///
+    /// # Returns
+    ///
+    /// A reference to the window definition
+    pub fn get_window_definition(&self, name: &str) -> Option<&SpriteWindowDefinition> {
+        self.definitions.get(name)
+     }
+
+    /// Returns all window definitions by window type
+    ///
+    /// # Arguments
+    ///
+    /// * `window_type` - Window type
+    ///
+    /// # Returns
+    ///
+    /// A Vec of references to the window definitions
+    pub fn get_definitions_by_window_type(&self, window_type: WindowType) -> Vec<&SpriteWindowDefinition> {
+        self.definitions.values()
+            .filter(|d| d.window_type == window_type)
+            .collect()
+    }
 }
