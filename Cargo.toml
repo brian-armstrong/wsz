@@ -7,6 +7,13 @@ edition = "2021"
 rust-version = "1.81"
 license = "MIT"
 
+include = [
+    "src/**/*.rs",
+    "README.md",
+    "LICENSE",
+    "Cargo.toml",
+]
+
 [dependencies]
 zip = "8.6.0"
 thiserror = "2.0.12"
